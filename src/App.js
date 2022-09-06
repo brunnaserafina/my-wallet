@@ -9,6 +9,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PageLogin />} />
+          <Route path="/cadastro" element={<PageSignUp />} />
         </Routes>
       </BrowserRouter>
     </>
