@@ -4,6 +4,7 @@ import PageLogin from "./components/PageLogin";
 import PageSignUp from "./components/PageSignUp";
 import PageRegisters from "./components/PageRegisters";
 import PageReceived from "./components/PageReceived";
+import PageSpended from "./components/PageSpended";
 import "./assets/css/reset.css";
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/cadastro" element={<PageSignUp />} />
           <Route path="/registros" element={<PageRegisters />} />
           <Route path="/entrada" element={<PageReceived />} />
+          <Route path="/saida" element={<PageSpended />} />
         </Routes>
       </BrowserRouter>
     </>
