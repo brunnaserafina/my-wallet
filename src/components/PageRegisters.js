@@ -25,7 +25,7 @@ export default function PageRegisters() {
           </div>
         </Link>
 
-        <Link to={`/entrada`}>
+        <Link to={`/saida`}>
           <img src={plusIcon} alt="plusIcon" />
           <div>
             <p>Nova </p>
