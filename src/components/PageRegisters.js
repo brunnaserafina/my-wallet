@@ -23,6 +23,7 @@ export default function PageRegisters() {
             <p>entrada</p>
           </div>
         </button>
+
         <button>
           <img src={plusIcon} alt="plusIcon" />
           <div>
