@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import exitIcon from "../assets/imgs/exitIcon.svg";
 import plusIcon from "../assets/imgs/plusIcon.svg";
@@ -16,21 +17,21 @@ export default function PageRegisters() {
       </Registers>
 
       <Buttons>
-        <button>
+        <Link to={`/entrada`}>
           <img src={plusIcon} alt="plusIcon" />
           <div>
             <p>Nova </p>
             <p>entrada</p>
           </div>
-        </button>
+        </Link>
 
-        <button>
+        <Link to={`/entrada`}>
           <img src={plusIcon} alt="plusIcon" />
           <div>
             <p>Nova </p>
             <p>saída</p>
           </div>
-        </button>
+        </Link>
       </Buttons>
     </RegistersContainer>
   );
@@ -86,7 +87,7 @@ const Buttons = styled.div`
   display: flex;
   justify-content: space-between;
 
-  button {
+  a {
     background-color: #a328d6;
     width: 47%;
     border-radius: 5px;
@@ -97,6 +98,7 @@ const Buttons = styled.div`
     justify-content: space-between;
     box-sizing: border-box;
     padding: 10px;
+    text-decoration: none;
   }
 
   div {
