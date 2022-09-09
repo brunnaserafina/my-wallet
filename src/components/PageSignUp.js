@@ -11,28 +11,28 @@ export default function PageSignUp() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const body = {
     name,
     email,
     password,
-    confirmPassword,
+    repeatPassword,
   };
 
   function joinSignUp(event) {
     event.preventDefault();
 
-    const requisicao = axios.post("http://localhost:5000/cadastro", body);
+    const requisicao = axios.post("http://localhost:5000/sign-up", body);
     requisicao.catch(() => {
       alert("Confira os dados!");
       setName("");
       setEmail("");
       setPassword("");
-      setConfirmPassword("");
+      setRepeatPassword("");
     });
     requisicao.then((response) => {
       console.log(response);
-      navigate("/login");
+      navigate("/");
     });
   }
 
@@ -64,10 +64,10 @@ export default function PageSignUp() {
         />
         <Input
           placeholder="Confirme a senha"
-          value={confirmPassword}
+          value={repeatPassword === password}
           type="password"
           required
-          onChange={(e) => setConfirmPassword(e.target.value)}
+          onChange={(e) => setRepeatPassword(e.target.value)}
         />
         <Button>Cadastrar</Button>
       </form>

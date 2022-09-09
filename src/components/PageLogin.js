@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { useState } from "react";
+import UserContext from "../context/UserContext";
 import axios from "axios";
 import Container from "../common/Container";
 import Input from "../common/Input";
@@ -10,6 +12,8 @@ export default function PageLogin() {
   const navigate = useNavigate("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUsername } = useContext(UserContext);
+  const { setToken } = useContext(UserContext);
   const body = {
     email,
     password,
@@ -18,7 +22,7 @@ export default function PageLogin() {
   function joinLogin(event) {
     event.preventDefault();
 
-    const requisicao = axios.post("http://localhost:5000/", body);
+    const requisicao = axios.post("http://localhost:5000/sign-in", body);
 
     requisicao.catch(() => {
       alert("Email ou senha incorreta!");
@@ -27,7 +31,12 @@ export default function PageLogin() {
     });
 
     requisicao.then((response) => {
-      console.log(response);
+      setToken(response.data.token);
+      setUsername(response.data.name);
+      // localStorage.setItem(
+      //   "mywallet",
+      //   JSON.stringify({ token: response.data.token })
+      // );
       navigate("/registros");
     });
   }
