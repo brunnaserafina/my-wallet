@@ -33,7 +33,7 @@ export default function PageReceived() {
       navigate("/registros");
     });
   }
-
+  
   return (
     <TransactionContainer>
       <h2>Nova entrada</h2>
