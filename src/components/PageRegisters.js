@@ -39,7 +39,7 @@ export default function PageRegisters() {
       </Message>
 
       {containRegisters ? (
-        <Registers justifyContent={"flex start"} >
+        <Registers justifyContent={"flex start"}>
           {registers.map((register) => (
             <RegistersElements key={register.id} register={register} />
           ))}
@@ -75,7 +75,9 @@ export default function PageRegisters() {
 function RegistersElements({ register }) {
   return (
     <Transaction>
-      <p>{register.date} {register.description}</p>
+      <p>
+        {register.date} {register.description}
+      </p>
       <p>{register.value}</p>
     </Transaction>
   );
@@ -110,7 +112,7 @@ const Registers = styled.div`
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
-  justify-content: ${props => props.justifyContent};
+  justify-content: ${(props) => props.justifyContent};
   align-items: center;
   border-radius: 5px;
   margin-top: 25px;
