@@ -1,20 +1,55 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { useContext } from "react";
+import { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import UserContext from "../context/UserContext";
 import exitIcon from "../assets/imgs/exitIcon.svg";
 import plusIcon from "../assets/imgs/plusIcon.svg";
 
 export default function PageRegisters() {
+  const { username } = useContext(UserContext);
+  const { token } = useContext(UserContext);
+  const [registers, setRegisters] = useState([]);
+  const [containRegisters, setContainRegisters] = useState(true);
+
+  useEffect(() => {
+    const request = axios.get("http://localhost:5000/transactions", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    request.catch((response) => console.log(response));
+
+    request.then((response) => {
+      setRegisters(response.data);
+
+      if (response.data.length === 0) {
+        setContainRegisters(false);
+      }
+    });
+  }, []);
+
   return (
     <RegistersContainer>
       <Message>
-        <p>Olá, Fulano</p>
+        <p>Olá, {username}</p>
         <img src={exitIcon} alt="exitIcon" />
       </Message>
 
-      <Registers>
-        <p>Não há registros de </p>
-        <p>entrada ou saída</p>
-      </Registers>
+      {containRegisters ? (
+        <Registers justifyContent={"flex start"} >
+          {registers.map((register) => (
+            <RegistersElements key={register.id} register={register} />
+          ))}
+        </Registers>
+      ) : (
+        <Registers justifyContent={"center"}>
+          <p>Não há registros de </p>
+          <p>entrada ou saída</p>
+        </Registers>
+      )}
 
       <Buttons>
         <Link to={`/entrada`}>
@@ -34,6 +69,15 @@ export default function PageRegisters() {
         </Link>
       </Buttons>
     </RegistersContainer>
+  );
+}
+
+function RegistersElements({ register }) {
+  return (
+    <Transaction>
+      <p>{register.date} {register.description}</p>
+      <p>{register.value}</p>
+    </Transaction>
   );
 }
 
@@ -66,7 +110,7 @@ const Registers = styled.div`
   background-color: #f7f7f7;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: ${props => props.justifyContent};
   align-items: center;
   border-radius: 5px;
   margin-top: 25px;
@@ -111,4 +155,11 @@ const Buttons = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
   }
+`;
+
+const Transaction = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  background-color: red;
 `;

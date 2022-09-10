@@ -64,7 +64,7 @@ export default function PageSignUp() {
         />
         <Input
           placeholder="Confirme a senha"
-          value={repeatPassword === password}
+          value={repeatPassword}
           type="password"
           required
           onChange={(e) => setRepeatPassword(e.target.value)}
