@@ -14,6 +14,8 @@ export default function PageRegisters() {
   const { token } = useContext(UserContext);
   const [registers, setRegisters] = useState([]);
   const [containRegisters, setContainRegisters] = useState(true);
+  const [balance, setBalance] = useState(0);
+  let colorBalance = false;
 
   useEffect(() => {
     const request = axios.get("http://localhost:5000/transactions", {
@@ -23,13 +25,32 @@ export default function PageRegisters() {
     request.catch((response) => console.log(response));
 
     request.then((response) => {
-      setRegisters(response.data);
+      const transaction = response.data;
+      let positivo = 0;
+      let negativo = 0;
 
-      if (response.data.length === 0) {
+      setRegisters(transaction);
+      console.log(transaction);
+
+      if (transaction.length === 0) {
         setContainRegisters(false);
       }
+
+      for (let i = 0; i < transaction.length; i++) {
+        if (transaction[i].type === "entrada") {
+          positivo += Number(transaction[i].value);
+        } else if (transaction[i].type === "saida") {
+          negativo += Number(transaction[i].value);
+        }
+      }
+
+      setBalance((positivo - negativo).toFixed(2));
     });
   }, []);
+
+  if (balance < 0) {
+    colorBalance = true;
+  }
 
   return (
     <RegistersContainer>
@@ -40,9 +61,20 @@ export default function PageRegisters() {
 
       {containRegisters ? (
         <Registers justifyContent={"flex start"}>
-          {registers.map((register) => (
-            <RegistersElements key={register.id} register={register} />
-          ))}
+          <Transactions>
+            {registers.map((register) => (
+              <RegistersElements
+                key={register.id}
+                register={register}
+                balance={balance}
+              />
+            ))}
+          </Transactions>
+
+          <Balance>
+            <h6>SALDO</h6>
+            <Value $color={colorBalance}>{balance}</Value>
+          </Balance>
         </Registers>
       ) : (
         <Registers justifyContent={"center"}>
@@ -72,16 +104,77 @@ export default function PageRegisters() {
   );
 }
 
-function RegistersElements({ register }) {
+function RegistersElements({ register, balance }) {
+  let colorTransaction = true;
+
+  if (register.type === "entrada") {
+    colorTransaction = false;
+  }
+
   return (
-    <Transaction>
-      <p>
-        {register.date} {register.description}
-      </p>
-      <p>{register.value}</p>
-    </Transaction>
+    <>
+      <Transaction>
+        <h5>
+          <span>{register.date}</span> {register.description}
+        </h5>
+        <p>
+          <Span $color={colorTransaction}>{register.value}</Span>
+        </p>
+      </Transaction>
+    </>
   );
 }
+
+const Transactions = styled.div`
+  overflow-y: auto;
+  width: 90%;
+  margin-bottom: 30px;
+`;
+
+const Balance = styled.div`
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  margin-bottom: 15px;
+  width: 90%;
+  justify-content: space-between;
+
+  h6 {
+    font-family: Raleway;
+    font-size: 19px;
+    font-weight: 700;
+    color: #000000;
+  }
+`;
+const Value = styled.span`
+  font-family: Raleway;
+  color: ${(props) => (props.$color ? "#C70000" : "#03AC00")};
+  font-size: 19px;
+  font-weight: 400;
+`;
+const Transaction = styled.div`
+  width: 95%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  h5 {
+    font-family: Raleway;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 400;
+  }
+
+  h5 > span {
+    color: #c6c6c6;
+  }
+`;
+
+const Span = styled.span`
+  color: ${(props) => (props.$color ? "#C70000" : "#03AC00")};
+  font-size: 16px;
+  font-weight: 400;
+`;
 
 const RegistersContainer = styled.div`
   background-color: #8c11be;
@@ -117,6 +210,9 @@ const Registers = styled.div`
   border-radius: 5px;
   margin-top: 25px;
   margin-bottom: 12px;
+  box-sizing: border-box;
+  padding-top: 20px;
+  position: relative;
 
   p {
     font-family: Raleway;
@@ -157,11 +253,4 @@ const Buttons = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
   }
-`;
-
-const Transaction = styled.div`
-  width: 95%;
-  display: flex;
-  justify-content: space-between;
-  background-color: red;
 `;
