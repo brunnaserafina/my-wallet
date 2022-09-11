@@ -1,15 +1,13 @@
-import Input from "../common/Input";
-import Button from "../common/Button";
-import TransactionContainer from "../common/Transaction";
 import { useState } from "react";
-import { useContext } from "react";
-import UserContext from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { postTransaction } from "../../services/mywallet";
+import Input from "../../common/Input";
+import Button from "../../common/Button";
+import TransactionContainer from "../../common/Transaction";
 
 export default function PageSpended() {
   const navigate = useNavigate("");
-  const { token } = useContext(UserContext);
+  const token = JSON.parse(localStorage.getItem("mywallet")).token;
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
 
@@ -22,16 +20,13 @@ export default function PageSpended() {
   function joinSpended(event) {
     event.preventDefault();
 
-    const request = axios.post("http://localhost:5000/transactions", body, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    request.catch((response) => {
-      console.log(response);
-      alert("Informe o valor e a descrição da entrada de forma correta");
-    });
-    request.then(() => {
-      navigate("/registros");
-    });
+    postTransaction(body, token)
+      .catch(() => {
+        alert("Informe o valor e a descrição da entrada de forma correta");
+      })
+      .then(() => {
+        navigate("/registros");
+      });
   }
 
   return (
