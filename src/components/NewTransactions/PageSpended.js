@@ -7,7 +7,6 @@ import TransactionContainer from "../../common/Transaction";
 
 export default function PageSpended() {
   const navigate = useNavigate("");
-  const token = JSON.parse(localStorage.getItem("mywallet")).token;
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
 
@@ -20,7 +19,7 @@ export default function PageSpended() {
   function joinSpended(event) {
     event.preventDefault();
 
-    postTransaction(body, token)
+    postTransaction(body)
       .catch(() => {
         alert("Informe o valor e a descrição da entrada de forma correta");
       })

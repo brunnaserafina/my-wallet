@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getTransactions } from "../../services/mywallet";
+import { getTransactions, deleteSignOut } from "../../services/mywallet";
 import exitIcon from "../../assets/imgs/exitIcon.svg";
 import plusIcon from "../../assets/imgs/plusIcon.svg";
 import {
@@ -17,7 +17,6 @@ import {
 
 export default function PageRegisters() {
   const navigate = useNavigate("");
-  const token = JSON.parse(localStorage.getItem("mywallet")).token;
   const username = JSON.parse(localStorage.getItem("mywallet")).name;
   const [registers, setRegisters] = useState([]);
   const [containRegisters, setContainRegisters] = useState(true);
@@ -25,7 +24,7 @@ export default function PageRegisters() {
   let colorBalance = false;
 
   useEffect(() => {
-    getTransactions(token)
+    getTransactions()
       .catch((response) => console.log(response))
       .then((response) => {
         const transaction = response.data;
@@ -48,7 +47,18 @@ export default function PageRegisters() {
 
         setBalance(positivo - negativo);
       });
-  }, [token]);
+  }, []);
+
+  function signOut() {
+    if (window.confirm("Você realmente deseja sair?")) {
+      deleteSignOut()
+        .catch((response) => console.log(response))
+        .then(() => {
+          localStorage.clear("mywallet");
+          navigate("/");
+        });
+    }
+  }
 
   if (balance < 0) {
     colorBalance = true;
@@ -58,23 +68,14 @@ export default function PageRegisters() {
     <RegistersContainer>
       <Message>
         <p>Olá, {username}</p>
-        <img
-          src={exitIcon}
-          alt="exitIcon"
-          onClick={() => {
-            if (window.confirm("Você realmente deseja sair?")) {
-              localStorage.clear("mywallet");
-              navigate("/");
-            }
-          }}
-        />
+        <img src={exitIcon} alt="exitIcon" onClick={signOut} />
       </Message>
 
       {containRegisters ? (
         <Registers justifyContent={"flex start"}>
           <Transactions>
-            {registers.map((register, index) => (
-              <RegistersElements key={index} register={register} />
+            {registers.map((register) => (
+              <RegistersElements key={register.id} register={register} />
             ))}
           </Transactions>
 

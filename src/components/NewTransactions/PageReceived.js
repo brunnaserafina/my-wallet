@@ -7,7 +7,6 @@ import TransactionContainer from "../../common/Transaction";
 
 export default function PageReceived() {
   const navigate = useNavigate("");
-  const token = JSON.parse(localStorage.getItem("mywallet")).token;
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
   const body = {
@@ -19,7 +18,7 @@ export default function PageReceived() {
   function joinReceived(event) {
     event.preventDefault();
 
-    postTransaction(body, token)
+    postTransaction(body)
       .catch(() => {
         alert("Informe o valor e a descrição da entrada de forma correta");
       })
