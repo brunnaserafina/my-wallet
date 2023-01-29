@@ -59,19 +59,21 @@
 ```bash
  $ git clone https://github.com/brunnaserafina/my-wallet.git
 ```
-3. Instale as dependências:
+3. Clone o repositório back-end https://github.com/brunnaserafina/my-wallet-api
+
+4. Instale as dependências:
 ```bash
  $ npm i
 ```
-4. Você pode, opcionalmente, rodar o build 
+5. Você pode, opcionalmente, rodar o build 
 ```bash
  $ npm run build
 ```
-5. Rode a aplicação:
+6. Rode a aplicação:
 ```bash
  $ npm start
 ```
-6. Por fim, acesse http://localhost:3000 no seu browser 
+7. Por fim, acesse http://localhost:3000 no seu browser 
 ###
 <br />
 
