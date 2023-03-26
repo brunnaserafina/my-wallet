@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000";
+const BASE_URL = "https://my-wallet-db.onrender.com";
 
 function createHeaders() {
   const token = JSON.parse(localStorage.getItem("mywallet")).token;
