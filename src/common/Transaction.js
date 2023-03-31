@@ -7,6 +7,7 @@ const TransactionContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   h2 {
     font-family: Raleway;
@@ -16,6 +17,14 @@ const TransactionContainer = styled.div`
     width: 85vw;
     margin-top: 30px;
     margin-bottom: 40px;
+
+    @media (min-width: 768px) {
+      width: 50vw;
+    }
+
+    @media (min-width: 1024px) {
+      width: 30vw;
+    }
   }
 
   form {

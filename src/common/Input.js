@@ -15,6 +15,14 @@ const Input = styled.input`
   &::placeholder {
     color: #000000;
   }
+
+  @media (min-width: 768px) {
+    width: 50vw;
+  }
+
+  @media (min-width: 1024px) {
+    width: 30vw;
+  }
 `;
 
 export default Input;

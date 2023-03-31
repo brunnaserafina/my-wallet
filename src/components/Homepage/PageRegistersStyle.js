@@ -15,11 +15,23 @@ const Message = styled.div`
   display: flex;
   justify-content: space-between;
 
+  img {
+    cursor: pointer;
+  }
+
   p {
     font-family: Raleway;
     font-size: 26px;
     font-weight: 700;
     color: #f7f7f7;
+  }
+
+  @media (min-width: 768px) {
+    width: 50vw;
+  }
+
+  @media (min-width: 1024px) {
+    width: 60vw;
   }
 `;
 
@@ -45,6 +57,14 @@ const Registers = styled.div`
     font-size: 20px;
     color: #868686;
   }
+
+  @media (min-width: 768px) {
+    width: 50vw;
+  }
+
+  @media (min-width: 1024px) {
+    width: 60vw;
+  }
 `;
 
 const Transactions = styled.div`
@@ -68,6 +88,7 @@ const Balance = styled.div`
     color: #000000;
   }
 `;
+
 const Value = styled.span`
   font-family: Raleway;
   color: ${(props) => (props.$color ? "#C70000" : "#03AC00")};
@@ -104,6 +125,14 @@ const Buttons = styled.div`
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+  }
+
+  @media (min-width: 768px) {
+    width: 50vw;
+  }
+
+  @media (min-width: 1024px) {
+    width: 60vw;
   }
 `;
 

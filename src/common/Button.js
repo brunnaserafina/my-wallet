@@ -11,6 +11,15 @@ const Button = styled.button`
   font-size: 20px;
   font-family: Raleway;
   font-weight: 700;
+  cursor: pointer;
+
+  @media (min-width: 768px) {
+    width: 50vw;
+  }
+
+  @media (min-width: 1024px) {
+    width: 30vw;
+  }
 `;
 
 export default Button;
